@@ -1,61 +1,125 @@
 <template>
-	<div>
-		<BoatList v-bind:boats="boats"/>
-		<InfiniteLoading @infinite="loadMoreBoats"></InfiniteLoading>
-	</div>
+  <div>
+    <Modal ref="NewBoatModal">
+      <form @submit.prevent="addNewBoat">
+        <div class="font-bold text-xl mb-2">Add New Boat</div>
+        <div>
+          <label for="newBoatName">Boat Name</label>
+          <input
+              id="newBoatName"
+              name="newBoatName"
+              class="appearance-none inline-block w-full bg-gray-200 text-gray-700 border-solid border-red-500 rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white"
+              type="text">
+        </div>
+        <div>
+          <label for="newBoatType">Boat Type</label>
+          <select
+              id="newBoatType"
+              name="newBoatType"
+              class="appearance-none inline-block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white"
+          >
+            <option value="M">Motor</option>
+            <option value="S">Sail</option>
+          </select>
+        </div>
+        <div class="w-full center">
+          <button type="submit" class="block bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300">Add New
+            Boat
+          </button>
+        </div>
+      </form>
+    </Modal>
+    <div v-if="loggedIn">
+      <a class="inline-block p-3 cursor-pointer" @click="showModal()">Add New Boat</a>
+    </div>
+    <BoatList v-bind:boats="boats"/>
+    <InfiniteLoading @infinite="loadMoreBoats"></InfiniteLoading>
+  </div>
 </template>
 
 <script>
-    import {authComputed} from '../vuex/helper.js'
-    import axios from "axios"
-    import BoatList from "../components/BoatList"
-    import fragment from "vue-fragment"
-    import InfiniteLoading from 'vue-infinite-loading'
+import {authComputed} from '../vuex/helper.js'
+import axios from "axios"
+import BoatList from "../components/BoatList"
+import fragment from "vue-fragment"
+import InfiniteLoading from 'vue-infinite-loading'
+import Modal from '../components/Modal'
+import router from "@/router";
 
-    export default {
-        components: {InfiniteLoading, BoatList, fragment},
-        data() {
-            return {
-                isLoading: true,
-                boats: [],
-                welcome: "Hello",
-                busy: false,
-                lastRecord: 0,
-                batchSize: 3,
-            }
-        },
-        methods: {
-            loadMoreBoats($state) {
-                console.log("loadMoreBoats start")
-                let order = "ASC"
-                let orderBy = "boatPrice"
-                let type = ""
-                this.busy = true
-                axios.get(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/list', {
-                    params: {
-                        order,
-                        orderBy,
-                        type,
-                        limitFrom: this.lastRecord,
-                        batchSize: this.batchSize
-                    }
-                }).then(({data}) => {
-                    this.lastRecord += this.batchSize
-                    const append = JSON.parse(data.boats)
-
-                    this.boats = this.boats.concat(append)
-                    console.log("loadMoreBoats success", this.boats)
-                    $state.loaded()
-                }).catch((error) => {
-                    console.log("loadMoreBoats error", error)
-				})
-            }
-        },
-        computed: {
-            ...authComputed
-        },
-        created() {
-            this.loadMoreBoats()
-        }
+export default {
+  components: {InfiniteLoading, BoatList, fragment, Modal},
+  data() {
+    return {
+      isLoading: true,
+      boats: [],
+      welcome: "Hello",
+      busy: false,
+      lastRecord: 0,
+      batchSize: 3,
     }
+  },
+  methods: {
+    showModal() {
+      console.log("showModal")
+      this.$refs.NewBoatModal.showModal()
+    },
+    addNewBoat(submitEvent) {
+      axios.post(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/add', {
+        params: {
+          name: submitEvent.target.elements.newBoatName.value,
+          type: submitEvent.target.elements.newBoatType.value,
+        }
+      }).then(({data}) => {
+        console.log("data", data.boats)
+        const newBoat = JSON.parse(data.boats)
+        router.push({name: 'boatedit', params: {boatId: newBoat[0].boatId}});
+      }).catch((error) => {
+        console.log("newBoat error", error)
+      })
+    },
+    loadMoreBoats($state) {
+      console.log("loadMoreBoats start", $state)
+      let order = "ASC"
+      let orderBy = "boatPrice"
+      let type = ""
+      let status = "A"
+      this.busy = true
+      axios.get(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/list', {
+        params: {
+          order,
+          orderBy,
+          type,
+          status,
+          limitFrom: this.lastRecord,
+          batchSize: this.batchSize
+        }
+      }).then(({data}) => {
+        this.lastRecord += this.batchSize
+        const append = JSON.parse(data.boats)
+        console.log("append", append)
+        if (append.length > 0) {
+          this.boats = this.boats.concat(append)
+          console.log("loadMoreBoats success", this.boats)
+          $state.loaded()
+        } else {
+          console.log("complete")
+          $state.complete()
+        }
+
+      }).catch((error) => {
+        console.log("loadMoreBoats error", error)
+        $state.complete()
+      })
+    }
+  }
+  ,
+  computed: {
+    ...
+        authComputed
+  }
+  ,
+  created() {
+    //this.loadMoreBoats()
+  }
+}
 </script>

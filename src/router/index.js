@@ -7,6 +7,7 @@ import AboutUs from '../views/AboutUs.vue'
 import ContactUs from '../views/ContactUs.vue'
 import RegisterUser from '../views/RegisterUser.vue'
 import LoginUser from '../views/LoginUser.vue'
+import BoatEdit from '../views/BoatEdit.vue'
 
 Vue.use(Router)
 
@@ -49,6 +50,14 @@ const router = new Router({
             path: '/boat/:boatId',
             name: 'boat',
             component: Boat
+        },
+        {
+            path: '/boat/edit/:boatId',
+            name: 'boatedit',
+            component: BoatEdit,
+            props: (route) => ({
+                ...route.params
+            })
         }
     ]
 })

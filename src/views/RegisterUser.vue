@@ -41,13 +41,13 @@
 	  methods: {
 	    register () {
 			this.$store.dispatch('register',{
-              username: this.username,
+        username: this.username,
 			  email: this.email,
 			  password: this.password,
 				roles: ['admin']
 			})
 		  .then( () => {
-		    this.$router.push({ name: 'dashboard' })
+		    this.$router.push({ name: 'home' })
 		  })
 		  .catch(err => {
 			this.errors = err.response.data.errors

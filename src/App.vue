@@ -2,12 +2,11 @@
 	<div class="absolute top-0 left-0 right-0 bottom-0">
 		<NavMobile v-if="mobileView" :loggedIn="loggedIn" :showNav="showNav"></NavMobile>
 		<div id="container"
-			class="relative rounded-lg m-4 z-10 bg-white transition ease-in duration-500"
-			:class="{'slideContainer':showNav}"
-		>
+			 class="relative rounded-lg m-4 z-10 bg-white transition ease-in duration-500"
+			 :class="{'slideContainer':showNav}">
 			<nav id="banner"
-				class=" items-center bg-blue-800 p-3 pt-5 rounded-t-lg h-24 md:h-40 z-20 ver"
-				:class="mobileView ? 'bannerMobile' : 'banner'"
+				 class=" items-center bg-blue-800 p-3 pt-5 rounded-t-lg h-24 md:h-40 z-20 ver"
+				 :class="mobileView ? 'bannerMobile' : 'banner'"
 			>
 				<font-awesome-icon
 					v-if="mobileView" @click="toggleShowNav" icon="bars"
@@ -24,15 +23,13 @@
 						src="@/assets/images/adurboatsales.png"
 						transition="scale-transition"
 					/>
-
 				</router-link>
 				<NavRegular v-if="!mobileView" :loggedIn="loggedIn"></NavRegular>
 			</nav>
-			<router-view id="content" class="flex-column justify-center"/>
+			<router-view id="content" class="flex-column justify-center rounded-b-lg"/>
 		</div>
 	</div>
 </template>
-
 <script>
     import {authComputed} from './vuex/helper.js'
     import NavMobile from "./components/NavMobile";
@@ -54,7 +51,7 @@
             items: {},
             mobileView: true,
             mobileMenuActive: false,
-			showNav: false
+            showNav: false
         }),
         computed: {
             ...authComputed
@@ -62,8 +59,7 @@
         methods: {
             toggleShowNav() {
                 this.showNav = !this.showNav
-                console.log("setShowNav",this.$showNav)
-			},
+            },
             logout() {
                 console.log("logout called")
                 this.$store.dispatch('logout')
@@ -72,23 +68,15 @@
             handleView() {
                 this.showNav = false
                 this.mobileView = window.innerWidth <= 600
-                console.log("handleView")
             },
-            logMounted() {
-                console.log("mounted")
-            }
         },
         created() {
             window.addEventListener('resize', this.handleView);
             this.handleView();
         },
         destroyed() {
-            console.log("destroy")
             window.removeEventListener('resize', this.handleView);
         },
-        mounted() {
-            this.logMounted()
-        }
     }
 </script>
 <style>
@@ -99,21 +87,20 @@
 		height: 100%;
 		background-color: #ddd;
 	}
-
 	.banner {
 		background-image: url("./assets/images/sunset-over-yachts.jpg");
-		background-position-y:85%;
-		background-position-x:0px;
+		background-position-y: 85%;
+		background-position-x: 0px;
 		background-size: 100%;
 	}
 	.bannerMobile {
 		background-image: url("./assets/images/sunset-over-yachts.jpg");
-		background-position-y:-150px;
+		background-position-y: -150px;
 		background-size: 100%;
 	}
 	#content {
 		/*background-color: #94b3c0;*/
-		background-color:#88adc7
+		background-color: #88adc7
 	}
 	.slideContainer {
 		transform: translateX(200px);

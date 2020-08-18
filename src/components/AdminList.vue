@@ -1,26 +1,24 @@
 <template>
 	<div class="flex-column justify-center py-4 pb-10">
-		<div class="flex flex-wrap w-full justify-center">
-			<BoatListItem data-aos="slide-up" data-aos-delay="300" v-for="(boat, index) in sortedBoats"
+		<table>
+			<AdminListItem  v-for="(boat, index) in sortedBoats"
 				v-bind:boat="boat"
 				v-bind:index="index"
 				v-bind:key="index"/>
+		</table>
 
+		<div class="flex justify-center">
+			<button class="px-4 font-weight-bold" @click="prevPage" v-if="this.currentPage > 1">Previous</button>
+			<button class="px-4 font-weight-bold" @click="nextPage" v-if="(this.currentPage*this.pageSize) < this.boats.length">Next</button>
 		</div>
-<!--
-<div class="flex justify-center">-->
-<!--			<button class="px-4 font-weight-bold" @click="prevPage" v-if="this.currentPage > 1">Previous</button>-->
-<!--			<button class="px-4 font-weight-bold" @click="nextPage" v-if="(this.currentPage*this.pageSize) < this.boats.length">Next</button>-->
-<!--		</div>-->
 	</div>
 </template>
 <script>
-    import BoatListItem from './BoatListItem'
-    import axios from "axios";
+    import AdminListItem from './AdminListItem'
 
     export default {
         components: {
-            BoatListItem
+            AdminListItem
 		},
 		data: () => {
             return {

@@ -1,5 +1,6 @@
 <template>
-	<div id="navMenu" class="navMenuMobile transition ease-in duration-500" ref="navMenu" @click="menuClicked" :class="{'showMenu':showNav}">
+	<div id="navMenu" class="navMenuMobile transition ease-in duration-500" ref="navMenu" @click="menuClicked"
+		 :class="{'showMenu':showNav}">
 		<ul class="text-white">
 			<li>
 				<router-link to="/">
@@ -7,27 +8,27 @@
 				</router-link>
 			</li>
 			<li>
-				<router-link to="/aboutus" >
+				<router-link to="/aboutus">
 					About Us
 				</router-link>
 			</li>
 			<li>
-				<router-link to="/contactus" >
+				<router-link to="/contactus">
 					Contact Us
 				</router-link>
 			</li>
 			<li v-if="loggedIn">
-				<router-link to="/admin" >
+				<router-link to="/admin">
 					Admin
 				</router-link>
 			</li>
 			<li v-if="!loggedIn">
-				<router-link to="/login" >
+				<router-link to="/login">
 					Login
 				</router-link>
 			</li>
 			<li v-else>
-				<div @click="logout" class="text-white font-bold cursor-pointer">
+				<div @click="logout" class="block text-white font-bold cursor-pointer">
 					Logout
 				</div>
 			</li>
@@ -35,23 +36,26 @@
 	</div>
 </template>
 <script>
-	export default {
+    export default {
         props: {
             loggedIn: {
                 type: Boolean,
                 required: true
-			},
+            },
             showNav: {
                 type: Boolean,
                 required: true
             }
         },
-		methods: {
-			menuClicked() {
+        methods: {
+            menuClicked() {
                 this.$parent.toggleShowNav();
-			}
-		}
-	}
+            },
+            logout() {
+                this.$parent.logout();
+            }
+        }
+    }
 </script>
 <style scoped>
 	.navMenuMobile {
@@ -63,17 +67,20 @@
 		z-index: 0;
 		opacity: 0;
 	}
+
 	.navMenuMobile li {
-		display:block ;
+		display: block;
 		padding-bottom: 10px;
 	}
-	.navMenuMobile li a {
+
+	.navMenuMobile li a, .navMenuMobile li div {
 		font-size: 1.3rem;
 		font-weight: bold;
 		color: #999;
 		font-family: "Century Gothic"
 
 	}
+
 	.showMenu {
 		opacity: 1;
 	}

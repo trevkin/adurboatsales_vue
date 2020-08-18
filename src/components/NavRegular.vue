@@ -27,7 +27,7 @@
 				</router-link>
 			</li>
 			<li v-else>
-				<div @click="logout" class="text-white font-bold cursor-pointer">
+				<div @click="logout" class="inline text-white font-bold cursor-pointer">
 					Logout
 				</div>
 			</li>
@@ -42,6 +42,11 @@
                 required: true
             }
         },
+		methods: {
+            logout(){
+                this.$parent.logout();
+            },
+		}
     }
 </script>
 <style scoped>

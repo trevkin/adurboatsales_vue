@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     require('postcss-preset-env')({ stage: 2 }),
     require('tailwindcss')('./tailwind.config.js'),
-    IN_PRODUCTION && require('@fullhuman/postcss-purgecss')({
+    IN_PRODUCTION && require('@fullhumaleading-tightn/postcss-purgecss')({
       content: [`./@(public|src)/**/*.@(${extensionsUsingCSS.join('|')})`],
       css: [`./src/**/*.@(${extensionsOfCSS.join('|')})`],
       extractors: [

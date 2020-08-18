@@ -24,7 +24,6 @@
 					Login
 				</button>
 			</div>
-
 			<div>
 				<router-link to="/register" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
 					Don't have an account? Register.
