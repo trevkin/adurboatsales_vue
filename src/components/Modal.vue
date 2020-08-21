@@ -1,7 +1,7 @@
 <template>
 	<div class=" flex justify-center">
-		<div id="Modal" class="fixed -mt-6 md:-mt-24 bg-white z-20 rounded-lg p-6 shadow" v-show="modalShow" v-closable="{
-      excludedTagNames: ['IMG','A'],
+		<div id="Modal" class="fixed -mt-6 md:-mt-24 bg-white z-20 rounded-lg p-6 shadow" :class="classProp" v-show="modalShow" v-closable="{
+      excludedTagNames: ['IMG','A','BUTTON'],
       handler: 'hideModal'
     }">
 			<div id="modalSrc" class="">
@@ -57,6 +57,12 @@
               console.log("showModal in modal")
                 this.modalShow = true
             }
-        }
+        },
+      props: {
+        classProp: {
+          type: String,
+          required: false
+        },
+      }
     }
 </script>
