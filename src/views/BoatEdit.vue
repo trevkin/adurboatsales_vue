@@ -1,15 +1,43 @@
 <template>
   <div>
-    <Modal ref="ConfirmationModal" :classProp="updateMessageClass">
-      <form @submit.prevent="confirmUpdateMessage">
-        <div class="font-bold text-xl mb-2">{{ updateMessage }}</div>
-        <div class="w-full flex justify-center ">
-          <button type="submit" class="bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300">OK</button>
-        </div>
-      </form>
+    <Modal ref="ConfirmationModal" :classProp="confirmClass">
+      <div class="font-bold text-xl mb-2">{{ confirmMessage }}</div>
+      <div class="w-full flex justify-center" v-if="confirmMode == 'delete'">
+        <button @click="deleteImage(deleteSuffix)" type="button"
+                class="bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300">OK
+        </button>
+        <button @click="$refs.ConfirmationModal.hideModal()" type="button"
+                class="bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300 ml-3">Cancel
+        </button>
+      </div>
+      <div class="w-full flex justify-center" v-if="confirmMode == 'update'">
+        <button @click="confirmUpdateMessage" type="button"
+                class="bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300">OK
+        </button>
+      </div>
     </Modal>
     <Modal ref="UploadModal">
       <form>
+        <div v-if="uploadedfilesError !== ''"
+             class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
+          <strong class="font-bold">Errors!</strong><br>
+          <span class="block sm:inline" v-html="uploadedfilesError"></span>
+          <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg class="fill-current h-6 w-6 text-red-500" role="button" @click="uploadedfilesError = ''"
+                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path
+                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+          </span>
+        </div>
+        <div v-if="uploadedfilesSuccess !== ''"
+             class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-2" role="alert">
+          <strong class="font-bold">Confirmed!</strong><br>
+          <span class="block sm:inline" v-html="uploadedfilesSuccess"></span>
+          <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+          <svg class="fill-current h-6 w-6 text-green-500" role="button" @click="uploadedfilesSuccess = ''"
+               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path
+              d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+          </span>
+        </div>
         <div class="font-bold text-xl mb-2">Browse for Image</div>
         <div><input type="file" id="uploadedfiles" ref="uploadedfiles" multiple v-on:change="handleImagesUpload()"/>
         </div>
@@ -29,6 +57,7 @@
         </div>
       </form>
     </Modal>
+
     <div class="w-full p-5">
       <form @submit.prevent="updateBoat" class="w-full">
         <button type="button" @click="uploadModal"
@@ -46,10 +75,11 @@
                 :src="getImageUrl(boat.boatID, imageSuffix) + '?rnd=' + cacheKey"
                 :key="index+cacheKey"
                 class="object-cover w-full md:h-48 xl:h-64 border p-0 rounded-lg"/>
-            <div
+            <button
+                type="button"
                 class="absolute right-0 top-0 px-3 pb-1 m-2 text-lg font-bold text-black cursor-pointer bg-white rounded-lg shadow-lg"
-                @click="deleteImage(imageSuffix)">x
-            </div>
+                @click="deleteConfirmation(imageSuffix)">x
+            </button>
             <div
                 v-if="index < availableImages.length-1"
                 class="absolute transform rotate-90 bottom-0 -mb-3 left-1/2 h-18 md:rotate-0 md:right-0 md:left-auto md:top-0 px-2 pb-5 pt-4 mt-24 mr-2 text-xl font-bold text-black cursor-pointer bg-white rounded-lg shadow-lg"
@@ -367,10 +397,14 @@ export default {
         status: 'P',
         statusTitle: 'Pending Information'
       }],
-      updateMessage: '',
-      updateMessageClass: 'bg-green-300',
+      uploadedfilesError: '',
+      uploadedfilesSuccess: '',
+      confirmMessage: '',
+      confirmClass: 'bg-green-300',
+      confirmMode: 'update',
+      deleteSuffix: '',
       cacheKey: +new Date(),
-      files: []
+      files: [],
     }
   },
   props: {},
@@ -378,7 +412,6 @@ export default {
     ...authComputed
   },
   methods: {
-
     showImageModal(imageUrl) {
       console.log("showModal", imageUrl)
       this.$refs.ImageModal.showModal(imageUrl)
@@ -418,12 +451,26 @@ export default {
               'Content-Type': 'multipart/form-data'
             }
           })
-          .then(data => {
+          .then((data) => {
+            this.uploadedfilesError = ''
+            this.uploadedfilesSuccess = ''
+            const results = JSON.parse(data.data.results)
+            results.forEach((result) => {
+              if (result.error) {
+                this.uploadedfilesError += result.file + ': <b>' + result.error + '</b><br>'
+              } else {
+                this.uploadedfilesSuccess += result.file + ': <b>Uploaded!</b><br>'
+              }
+            })
             this.loadImages()
-            console.log('SUCCESS!!', data);
           })
-          .catch(error => {
-            console.log('FAILURE!!', error);
+          .catch((error) => {
+            this.uploadedfilesError = ''
+            console.log('FAILURE!!', error.response.data.errors)
+            errors.forEach((e) => {
+              this.uploadedfilesError += e.file + ':' + e.error + '<br>'
+            })
+
           });
     },
     confirmUpdateMessage() {
@@ -432,24 +479,27 @@ export default {
     uploadModal() {
       this.$refs.UploadModal.showModal()
     },
-    showConfirmModal(updateMessage, updateMessageClass) {
-      this.updateMessage = updateMessage
-      this.updateMessageClass = updateMessageClass
+    showConfirmModal(confirmMessage, confirmClass, confirmMode) {
+      this.confirmMode = confirmMode
+      this.confirmMessage = confirmMessage
+      this.confirmClass = confirmClass
       this.$refs.ConfirmationModal.showModal()
     },
     updateBoat(submitEvent) {
-      console.log("update boat", this.boat)
       this.boat.boatPrice = submitEvent.target.elements.boatPrice.value
       axios.post(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/update', {
         params: {
           boat: this.boat
         }
       }).then(({data}) => {
-        console.log("data", data.boat)
-        this.showConfirmModal("Boat Details Updated", "bg-green-400")
+        this.showConfirmModal("Boat Details Updated", "", 'update')
       }).catch((error) => {
         console.log("newBoat error", error)
       })
+    },
+    deleteConfirmation(imageSuffix) {
+      this.deleteSuffix = imageSuffix
+      this.showConfirmModal("Delete this image?", "", 'delete')
     },
     deleteImage(imageSuffix) {
       axios.delete(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/image/delete', {
@@ -459,11 +509,11 @@ export default {
         }
       })
           .then((data) => {
+            this.cacheKey = +new Date();
             this.loadImages()
-            console.log('SUCCESS!!', data);
+            this.$refs.ConfirmationModal.hideModal()
           })
           .catch((error) => {
-
             console.log('FAILURE!!', error);
           });
     },
@@ -478,7 +528,6 @@ export default {
             .catch((error) => {
             })
         this.availableImages = this.availableImages.sort()
-        console.log("availableImages", this.availableImages)
       })
     }
   },
@@ -489,7 +538,6 @@ export default {
       }
     }).then(({data}) => {
       this.boat = JSON.parse(data.boat)
-      console.log("boat", this.boat)
       this.loadImages()
     })
   }

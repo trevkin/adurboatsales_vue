@@ -1,21 +1,22 @@
 <template>
-  <div class="w-full">
+  <div class="w-full content">
     <div v-if="loggedIn">
-      <router-link class="p-3" :to="{ name: 'boatedit', params: { boat: boat } }">Edit</router-link>
+      <button class="border-solid border-1 border-gray-900 px-4 py-1 m-3 mb-0 ml-5 bg-gray-400 hover:bg-gray-200" @click="editBoat(boat)">Edit This Boat</button>
     </div>
-    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class=" p-1 text-sm">
+    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="m-3 p-0 text-sm block">
       <div v-masonry-tile
            v-if="boat.boatID"
            v-for="(imageSuffix, index) in availableImages"
            :key="index"
            @click="showModal(getImageUrl(boat.boatID, imageSuffix))"
            id="image"
-           class="item w-auto md:w-5/12 lg:w-3/12 xl:w-1/6 m-2 p-0"
-      >
+           class="item h-auto w-auto md:w-1/2 lg:w-4/12 xl:w-1/5 m-0 p-2">
         <img
-            :src="getImageUrl(boat.boatID, imageSuffix)"
-            class="object-cover md:h-48 w-full border p-0"/>
+            :src="getImageUrl(boat.boatID, imageSuffix)+ '?rnd=' + cacheKey"
+            class=" h-auto w-full border m-0 p-0 rounded-lg"/>
       </div>
+    </div>
+    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="m-2 p-0 text-sm h-24 block">
       <div v-masonry-tile class="item flex flex-wrap my-3">
         <div class="w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/3 text-left px-3 ">
           <div v-if="this.boat.boatNumber" class="border-b border-t">
@@ -190,7 +191,8 @@ export default {
       imageSuffixes: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q'],
       url: process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT,
       availableImages: [],
-      imageUrl: ""
+      imageUrl: "",
+      cacheKey: +new Date(),
     }
   },
   props: {
@@ -205,10 +207,13 @@ export default {
     ...authComputed
   },
   methods: {
+    editBoat(boat) {
+      this.$router.push({ name: 'boatedit', params: { boat: boat } })
+    },
     showModal(imageUrl) {
       this.imageUrl = imageUrl
       this.$refs.ImageModal.showModal()
-      },
+    },
   },
   created() {
     axios.get(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/', {
@@ -226,6 +231,7 @@ export default {
               // console.clear()
             })
       })
+      this.availableImages = this.availableImages.sort()
       this.isLoading = false
     })
   }

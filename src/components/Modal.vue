@@ -1,13 +1,13 @@
 <template>
 	<div class=" flex justify-center">
-		<div id="Modal" class="fixed -mt-6 md:-mt-24 bg-white z-20 rounded-lg p-6 shadow" :class="classProp" v-show="modalShow" v-closable="{
+		<div id="Modal" class="fixed -mt-5 md:-mt-20 bg-white z-20 rounded-lg p-6 shadow" :class="classProp" v-show="modalShow" v-closable="{
       excludedTagNames: ['IMG','A','BUTTON'],
       handler: 'hideModal'
     }">
 			<div id="modalSrc" class="">
         <slot></slot>
 				<div @click="hideModal"
-					 class="absolute text-right mr-2 top-0 right-0 font-bold text-xl text-gray-600 cursor-pointer">x</div>
+					 class="absolute text-right px-4 top-0 right-0 font-bold text-xl text-gray-600 cursor-pointer">x</div>
 			</div>
 		</div>
 	</div>

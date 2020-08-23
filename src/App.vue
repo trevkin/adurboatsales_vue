@@ -99,8 +99,11 @@
 		background-size: 100%;
 	}
 	#content {
-		/*background-color: #94b3c0;*/
-		background-color: #88adc7
+    /*background-color: #bc601e;*/
+    /*background-color: #5a4638;*/
+    /*background-color: #f1b22e;*/
+		/*background-color: #777777;*/
+		background-color: #88adc7;
 	}
 	.slideContainer {
 		transform: translateX(200px);
