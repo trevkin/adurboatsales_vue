@@ -51,8 +51,9 @@
           </ul>
         </div>
         <div class="w-full flex justify-center">
-          <button type="button" @click="submitImages"
-                  class="bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300">Upload File(s)
+          <button
+              type="button" @click="submitImages"
+              class="bg-gray-400 text-gray-700 rounded py-2 px-3 hover:bg-gray-300">Upload File(s)
           </button>
         </div>
       </form>
@@ -179,7 +180,7 @@
                       name="boatType"
                       v-model="boat.boatType"
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
-                    <option v-for="boatType in boatTypes" :value="boatType.type">{{ boatType.typeTitle }}</option>
+                    <option v-for="boatType in $parent.boatTypes" :value="boatType.type">{{ boatType.typeTitle }}</option>
                   </select>
                 </div>
               </div>
@@ -192,7 +193,7 @@
                       name="boatType"
                       v-model="boat.boatStatus"
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
-                    <option v-for="boatStatus in boatStatuses" :value="boatStatus.status">{{
+                    <option v-for="boatStatus in $parent.boatStatuses" :value="boatStatus.status">{{
                         boatStatus.statusTitle
                       }}
                     </option>
@@ -392,11 +393,7 @@ export default {
       imageSuffixes: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q'],
       url: process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT,
       availableImages: [],
-      boatTypes: [{type: 'M', typeTitle: 'Motor'}, {type: 'S', typeTitle: 'Sail'}],
-      boatStatuses: [{status: 'A', statusTitle: 'Available'}, {status: 'S', statusTitle: 'Sold'}, {
-        status: 'P',
-        statusTitle: 'Pending Information'
-      }],
+
       uploadedfilesError: '',
       uploadedfilesSuccess: '',
       confirmMessage: '',

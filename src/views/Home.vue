@@ -30,21 +30,59 @@
       </form>
     </Modal>
     <div v-if="loggedIn">
-      <a class="inline-block p-3 cursor-pointer" @click="showModal()">Add New Boat</a>
+      <button type="button" class="bg-gray-400 text-gray-700 py-2 px-3 mt-3 ml-3 hover:bg-gray-300"
+              @click="showModal()">Add New Boat
+      </button>
+      <div class="inline-block">
+        <div class="inline-block ml-3 md:ml-10">Filters:</div>
+        <select
+            id="searchType"
+            name="searchType"
+            class=" appearance-none inline-block bg-gray-200 text-gray-700 border border-red-500 right-0 rounded py-2 px-3 mb-3 ml-3 leading-tight focus:outline-none focus:bg-white"
+            @change="applyFilters()"
+            v-model="searchType"
+        >
+          <option value="">All Types</option>
+          <option value="M">Motor</option>
+          <option value="S">Sail</option>
+        </select>
+
+        <select
+            id="searchStatus"
+            name="searchStatus"
+            class=" appearance-none inline-block bg-gray-200 text-gray-700 border border-red-500 right-0 rounded py-2 px-3 mt-3 mb-3 ml-3 leading-tight focus:outline-none focus:bg-white"
+            @change="applyFilters()"
+            v-model="searchStatus"
+        >
+          <option value="">All Statuses</option>
+          <option value="A">Available</option>
+          <option value="S">Sold</option>
+          <option value="P">Pending Information</option>
+        </select>
+        <input
+            id="searchName"
+            name="searchName"
+            class="appearance-none inline-block bg-gray-200 text-gray-700 border-solid border-red-500 right-0 rounded py-2 px-3 mb-3 ml-17 md:ml-3  leading-tight focus:outline-none focus:bg-white"
+            type="text"
+            v-model="searchName"
+            @input="applyFilters()"
+            placeholder="Filter by Name">
+      </div>
     </div>
     <BoatList v-bind:boats="boats"/>
-    <InfiniteLoading @infinite="loadMoreBoats"></InfiniteLoading>
+    <InfiniteLoading @infinite="loadMoreBoats" :identifier="infiniteId"></InfiniteLoading>
   </div>
 </template>
 
 <script>
-import {authComputed} from '../vuex/helper.js'
+import {authComputed, searchDataComputed} from '../vuex/helper.js'
 import axios from "axios"
 import BoatList from "../components/BoatList"
 import fragment from "vue-fragment"
 import InfiniteLoading from 'vue-infinite-loading'
 import Modal from '../components/Modal'
-import router from "@/router";
+import router from "@/router"
+import Vuex from "vuex"
 
 export default {
   components: {InfiniteLoading, BoatList, fragment, Modal},
@@ -52,10 +90,13 @@ export default {
     return {
       isLoading: true,
       boats: [],
-      welcome: "Hello",
       busy: false,
       lastRecord: 0,
       batchSize: 3,
+      searchStatus: this.$store.getters.getSearchData.searchStatus,
+      searchType: this.$store.getters.getSearchData.searchType,
+      searchName: this.$store.getters.getSearchData.searchName,
+      infiniteId: +new Date(),
     }
   },
   methods: {
@@ -78,20 +119,19 @@ export default {
       })
     },
     loadMoreBoats($state) {
-      console.log("loadMoreBoats start", $state)
+      console.log("loadMoreBoats", this.searchType, this.searchStatus, this.lastRecord)
       let order = "ASC"
       let orderBy = "boatPrice"
-      let type = ""
-      let status = "A"
       this.busy = true
       axios.get(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/boat/list', {
         params: {
           order,
           orderBy,
-          type,
-          status,
+          type: this.searchType,
+          status: this.searchStatus,
           limitFrom: this.lastRecord,
-          batchSize: this.batchSize
+          batchSize: this.batchSize,
+          name: this.searchName
         }
       }).then(({data}) => {
         this.lastRecord += this.batchSize
@@ -110,12 +150,26 @@ export default {
         console.log("loadMoreBoats error", error)
         $state.complete()
       })
+    },
+    applyFilters() {
+      this.$store.dispatch('setSearchData', {
+        searchType: this.searchType,
+        searchStatus: this.searchStatus,
+        searchName: this.searchName,
+      })
+          .then(() => {
+            this.boats = []
+            this.lastRecord = 0
+            this.infiniteId += 1
+          })
+          .catch(err => {
+
+          })
     }
   }
   ,
   computed: {
-    ...
-        authComputed
+    ...authComputed
   }
   ,
   created() {

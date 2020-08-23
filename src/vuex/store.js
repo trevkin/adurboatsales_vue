@@ -7,7 +7,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: null
+        user: null,
+        searchData:{
+            searchType:'',
+            searchStatus:'A',
+            searchName:''
+        }
     },
     mutations: {
         SET_USER_DATA(state, userData) {
@@ -19,9 +24,15 @@ export default new Vuex.Store({
         CLEAR_USER_DATA() {
             localStorage.removeItem('user')
             TokenStorage.clear()
+        },
+        SET_SEARCH_DATA(state, searchData) {
+            state.searchData = searchData
         }
     },
     actions: {
+        setSearchData({commit}, searchData) {
+            commit('SET_SEARCH_DATA', searchData)
+        },
         register({commit}, credentials) {
             return axios
                 .post(process.env.VUE_APP_API_URL + ":" + process.env.VUE_APP_API_PORT + '/api/auth/signup', credentials)
@@ -57,6 +68,9 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        getSearchData(state) {
+            return state.searchData
+        },
         loggedIn(state) {
             //return TokenStorage.isAuthenticated()
             return !!state.user

@@ -32,7 +32,7 @@
 </template>
 <script>
     import {authComputed} from './vuex/helper.js'
-    import NavMobile from "./components/NavMobile";
+    import NavMobile from "./components/NavMobile"
     import NavRegular from "./components/NavRegular"
 
     export default {
@@ -51,7 +51,12 @@
             items: {},
             mobileView: true,
             mobileMenuActive: false,
-            showNav: false
+            showNav: false,
+            boatTypes: [{type: 'M', typeTitle: 'Motor'}, {type: 'S', typeTitle: 'Sail'}],
+            boatStatuses: [{status: 'A', statusTitle: 'Available'}, {status: 'S', statusTitle: 'Sold'}, {
+            status: 'P',
+            statusTitle: 'Pending Information'
+          }],
         }),
         computed: {
             ...authComputed
