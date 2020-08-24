@@ -11,23 +11,18 @@
 				<label for="username" class="block text-gray-700 text-sm font-bold mb-2">
 					Username:
 				</label>
-				<input v-model="username" type="username" name="username" value  class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+				<input v-model="username" type="username" name="username" value class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
 			</div>
 			<div>
 				<label for="password" class="block text-gray-700 text-sm font-bold mb-2">
 					Password:
 				</label>
-				<input v-model="password" type="password" name="password" value class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+				<input v-model="password" type="password" name="password" value class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
 			</div>
 			<div>
-				<button type="submit" name="button" class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+				<button type="submit" name="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 					Login
 				</button>
-			</div>
-			<div>
-				<router-link to="/register" class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800">
-					Don't have an account? Register.
-				</router-link>
 			</div>
 		</form>
 	</div>

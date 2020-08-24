@@ -1,5 +1,8 @@
 <template>
   <div class="w-full">
+    <Modal ref="ImageModal">
+      <img :src="imageUrl" class="rounded-lg">
+    </Modal>
     <div v-if="loggedIn">
       <button class="border-solid border-1 border-gray-900 px-4 py-1 m-3 mb-0 ml-5 bg-gray-400 hover:bg-gray-200" @click="editBoat(boat)">Edit This Boat</button>
     </div>
@@ -13,7 +16,7 @@
            class="item h-auto w-auto md:w-1/2 lg:w-4/12 xl:w-1/5 m-0 p-2">
         <img
             :src="getImageUrl(boat.boatID, imageSuffix)+ '?rnd=' + cacheKey"
-            class=" h-auto w-full border m-0 p-0 rounded-lg"/>
+            class=" h-auto w-full m-0 p-0 rounded-lg"/>
       </div>
     </div>
     <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="m-2 p-0 text-sm h-24 block">
@@ -161,9 +164,7 @@
           </div>
         </div>
       </div>
-      <Modal ref="ImageModal">
-        <img :src="imageUrl" class="rounded-lg">
-      </Modal>
+
     </div>
   </div>
 </template>

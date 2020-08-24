@@ -75,7 +75,7 @@
             <img
                 :src="getImageUrl(boat.boatID, imageSuffix) + '?rnd=' + cacheKey"
                 :key="index+cacheKey"
-                class="object-cover w-full md:h-48 xl:h-64 border p-0 rounded-lg"/>
+                class="object-cover w-full md:h-48 xl:h-64 p-0 rounded-lg shadow"/>
             <button
                 type="button"
                 class="absolute right-0 top-0 px-3 pb-1 m-2 text-lg font-bold text-black cursor-pointer bg-white rounded-lg shadow-lg"
@@ -104,7 +104,7 @@
                       type="text"
                       name="boatNumber"
                       v-model="boat.boatNumber"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -114,7 +114,7 @@
                       type="text"
                       name="boatName"
                       v-model="boat.boatName"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -124,7 +124,7 @@
                       type="text"
                       name="boatManufacturer"
                       v-model="boat.boatManufacturer"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3 focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3 focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -134,7 +134,7 @@
                       type="text"
                       name="boatModel"
                       v-model="boat.boatModel"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3 focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3 focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -144,7 +144,7 @@
                       type="text"
                       name="boatHull"
                       v-model="boat.boatHull"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -154,7 +154,7 @@
                       type="text"
                       name="boatLocation"
                       v-model="boat.boatLocation"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -165,7 +165,7 @@
                       name="boatPrice"
                       id="boatPrice"
                       :value="boat.boatPrice | removePunctuation | addPunctuation"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
             </div>
@@ -179,7 +179,7 @@
                       type="text"
                       name="boatType"
                       v-model="boat.boatType"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                     <option v-for="boatType in $parent.boatTypes" :value="boatType.type">{{ boatType.typeTitle }}</option>
                   </select>
                 </div>
@@ -192,7 +192,7 @@
                       type="text"
                       name="boatType"
                       v-model="boat.boatStatus"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                     <option v-for="boatStatus in $parent.boatStatuses" :value="boatStatus.status">{{
                         boatStatus.statusTitle
                       }}
@@ -208,7 +208,7 @@
                       type="text"
                       name="boatLengthOA"
                       v-model="boat.boatLengthOA"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -219,7 +219,7 @@
                       type="text"
                       name="boatLengthWater"
                       v-model="boat.boatLengthWater"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -229,7 +229,7 @@
                       type="text"
                       name="boatBeam"
                       v-model="boat.boatBeam"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -239,7 +239,7 @@
                       type="text"
                       name="boatDraft"
                       v-model="boat.boatDraft"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -250,7 +250,7 @@
                       type="text"
                       name="boatDisplacement"
                       v-model="boat.boatDisplacement"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -260,7 +260,7 @@
                       type="text"
                       name="boatEngine"
                       v-model="boat.boatEngine"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
             </div>
@@ -273,7 +273,7 @@
                       type="text"
                       name="ownerName"
                       v-model="boat.ownerName"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -284,7 +284,7 @@
                       type="text"
                       name="ownerEmail"
                       v-model="boat.ownerEmail"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -296,7 +296,7 @@
                       name="ownerAddress"
                       :min-height="100"
                       :max-height="200"
-                      class="appearance-none inline-block w-full bg-white text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
+                      class="appearance-none inline-block w-full bg-white text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
                       v-model="boat.ownerAddress"/>
                 </div>
               </div>
@@ -308,7 +308,7 @@
                       type="text"
                       name="ownerPrice"
                       v-model="boat.ownerPrice"
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white">
                 </div>
               </div>
               <div class="sm:flex">
@@ -319,7 +319,7 @@
                       name="ownerNotes"
                       :min-height="100"
                       :max-height="200"
-                      class="appearance-none inline-block w-full bg-white text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
+                      class="appearance-none inline-block w-full bg-white text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
                       v-model="boat.ownerNotes"/>
                 </div>
               </div>
@@ -332,7 +332,7 @@
                     name="boatDescription"
                     :min-height="300"
                     :max-height="500"
-                    class="appearance-none inline-block w-full bg-white text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
+                    class="appearance-none inline-block w-full bg-white text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
                     v-model="boat.boatDescription"/>
               </div>
             </div>
@@ -344,7 +344,7 @@
                     name="boatAccommodation"
                     :min-height="300"
                     :max-height="500"
-                    class="appearance-none inline-block w-full bg-white text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
+                    class="appearance-none inline-block w-full bg-white text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
                     v-model="boat.boatAccommodation"/>
               </div>
             </div>
@@ -355,7 +355,7 @@
                     name="boatEquipment"
                     :min-height="300"
                     :max-height="500"
-                    class="appearance-none inline-block w-full bg-white text-gray-700 border border-red-500 rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
+                    class="appearance-none inline-block w-full bg-white text-gray-700 border  rounded py-1 px-3 mb-3  focus:outline-none focus:bg-white"
                     v-model="boat.boatEquipment"/>
               </div>
             </div>

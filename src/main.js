@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './vuex/store'
-import vuetify from '@/plugins/vuetify'
 import interceptorsSetup from './helpers/interceptors'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -20,7 +19,6 @@ interceptorsSetup()
 Vue.config.productionTip = false
 
 new Vue({
-    vuetify,
     router,
     store,
     created () {

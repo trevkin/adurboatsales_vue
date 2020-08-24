@@ -8,7 +8,7 @@
           <input
               id="newBoatName"
               name="newBoatName"
-              class="appearance-none inline-block w-full bg-gray-200 text-gray-700 border-solid border-red-500 rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white"
+              class="appearance-none inline-block w-full bg-gray-200 text-gray-700 rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white"
               type="text">
         </div>
         <div>
@@ -16,7 +16,7 @@
           <select
               id="newBoatType"
               name="newBoatType"
-              class="appearance-none inline-block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white"
+              class="appearance-none inline-block w-full bg-gray-200 text-gray-700 rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:bg-white"
           >
             <option value="M">Motor</option>
             <option value="S">Sail</option>
@@ -38,7 +38,7 @@
         <select
             id="searchType"
             name="searchType"
-            class=" appearance-none inline-block bg-gray-200 text-gray-700 border border-red-500 right-0 rounded py-2 px-3 mb-3 ml-3 leading-tight focus:outline-none focus:bg-white"
+            class=" appearance-none inline-block bg-gray-200 text-gray-700 right-0 rounded py-2 px-3 mb-3 ml-3 leading-tight focus:outline-none focus:bg-white"
             @change="applyFilters()"
             v-model="searchType"
         >
@@ -50,7 +50,7 @@
         <select
             id="searchStatus"
             name="searchStatus"
-            class=" appearance-none inline-block bg-gray-200 text-gray-700 border border-red-500 right-0 rounded py-2 px-3 mt-3 mb-3 ml-3 leading-tight focus:outline-none focus:bg-white"
+            class=" appearance-none inline-block bg-gray-200 text-gray-700 right-0 rounded py-2 px-3 mt-3 mb-3 ml-3 leading-tight focus:outline-none focus:bg-white"
             @change="applyFilters()"
             v-model="searchStatus"
         >
@@ -62,7 +62,7 @@
         <input
             id="searchName"
             name="searchName"
-            class="appearance-none inline-block bg-gray-200 text-gray-700 border-solid border-red-500 right-0 rounded py-2 px-3 mb-3 ml-17 md:ml-3  leading-tight focus:outline-none focus:bg-white"
+            class="appearance-none inline-block bg-gray-200 text-gray-700 right-0 rounded py-2 px-3 mb-3 ml-17 md:ml-3  leading-tight focus:outline-none focus:bg-white"
             type="text"
             v-model="searchName"
             @input="applyFilters()"
