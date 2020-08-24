@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full content">
+  <div class="w-full">
     <div v-if="loggedIn">
       <button class="border-solid border-1 border-gray-900 px-4 py-1 m-3 mb-0 ml-5 bg-gray-400 hover:bg-gray-200" @click="editBoat(boat)">Edit This Boat</button>
     </div>
-    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="m-3 p-0 text-sm block">
+    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="mx-2 pt-3 p-0 text-sm block">
       <div v-masonry-tile
            v-if="boat.boatID"
            v-for="(imageSuffix, index) in availableImages"

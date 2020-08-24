@@ -21,6 +21,7 @@ export default {
       lastRecord: 0,
       batchSize: 10,
       status: '',
+      users: []
     }
   },
   methods: {

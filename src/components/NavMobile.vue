@@ -17,11 +17,11 @@
 					Contact Us
 				</router-link>
 			</li>
-			<li v-if="loggedIn">
-				<router-link to="/admin">
-					Admin
-				</router-link>
-			</li>
+<!--			<li v-if="loggedIn">-->
+<!--				<router-link to="/admin">-->
+<!--					Admin-->
+<!--				</router-link>-->
+<!--			</li>-->
 			<li v-if="!loggedIn">
 				<router-link to="/login">
 					Login
