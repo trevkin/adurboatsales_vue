@@ -85,7 +85,6 @@
     }
 </script>
 <style>
-	/*@import './assets/styles/global.scss';*/
 	@import './assets/styles/tailwind.postcss';
 
 	body, html {
@@ -94,24 +93,19 @@
 	}
 	.banner {
 		background-image: url("./assets/images/sunset-over-yachts.jpg");
-		background-position-y: 85%;
+		background-position-y: 80%;
 		background-position-x: 0px;
 		background-size: 100%;
 	}
 	.bannerMobile {
 		background-image: url("./assets/images/sunset-over-yachts.jpg");
-		background-position-y: -150px;
+		background-position-y: -40px;
 		background-size: 100%;
 	}
 	#content {
-    /*background-color: #bc601e;*/
-    /*background-color: #5a4638;*/
-    /*background-color: #f1b22e;*/
-		/*background-color: #777777;*/
 		background-color: #88adc7;
 	}
 	.slideContainer {
 		transform: translateX(200px);
 	}
 </style>
-
