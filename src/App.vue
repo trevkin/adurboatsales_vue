@@ -99,8 +99,9 @@
 	}
 	.bannerMobile {
 		background-image: url("./assets/images/sunset-over-yachts.jpg");
-		background-position-y: -40px;
-		background-size: 100%;
+		background-position-y:50%;
+    background-position-x:50%;
+		background-size: 120%;
 	}
 	#content {
 		background-color: #88adc7;
