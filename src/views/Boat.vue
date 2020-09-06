@@ -4,9 +4,9 @@
       <img :src="imageUrl" class="rounded-lg">
     </Modal>
     <div v-if="loggedIn">
-      <button class="border-solid border-1 border-gray-900 px-4 py-1 m-3 mb-0 ml-5 bg-gray-400 hover:bg-gray-200" @click="editBoat(boat)">Edit This Boat</button>
+      <button class="border-solid border-1 border-gray-900 px-4 py-1 m-3 mb-0 ml-5 bg-gray-400 hover:bg-gray-200 block" @click="editBoat(boat)">Edit This Boat</button>
     </div>
-    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="mx-2 pt-3 p-0 text-md block">
+    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="flex flex-row mx-2 pt-3 p-0 text-md block">
       <div v-masonry-tile
            v-if="boat.boatID"
            v-for="(imageSuffix, index) in availableImages"
@@ -19,8 +19,8 @@
             class=" h-auto w-full m-0 p-0 rounded-lg"/>
       </div>
     </div>
-    <div v-masonry origin-left="true" transition-duration="1s" item-selector=".item" class="m-2 p-0 text-md h-24 block">
-      <div v-masonry-tile class="item flex flex-wrap my-3">
+    <div class="flex flex-row m-2 p-0 text-md block">
+      <div class="flex flex-row flex-wrap my-3">
         <div class="w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/3 text-left px-3 ">
           <div v-if="this.boat.boatNumber" class="border-b border-t">
             <div class="text-white font-bold pr-2 w-1/3 sm:w-1/6 md:w-1/4 lg:w-1/4 xl:w-1/3 inline-block align-top">
@@ -164,7 +164,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
