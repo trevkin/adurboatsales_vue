@@ -12,7 +12,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "aos": "^2.3.4",
     "autoprefixer": "^9.8.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "es6-promise": "^4.2.8",
     "numeral": "^2.0.6",
     "vue": "^2.6.12",
